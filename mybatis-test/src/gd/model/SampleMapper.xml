@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵퍼 이름설정 : 불러올때 이름으로 불러올수있다 -->
+<mapper namespace="gd.model.SampleMapper">
+	<!-- mybatis : ResultSet -> List<resultType> (ResultSet을 List로 변환시키지 않아도된다 = 반복문을 위한 반복을 안해도된다) -->
+	<!-- select id는 변수의 이름, resultType는 결과값의 타입을 선언함 -->
+	<select id="selectAll" resultType="gd.model.Sample">
+		SELECT sample_no sampleNo, sample_name sampleName FROM sample;
+	</select>
+</mapper>
