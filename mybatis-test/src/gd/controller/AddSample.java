@@ -1,34 +1,19 @@
 package gd.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gd.model.Sample;
-import gd.model.SampleDao;
-
-@WebServlet("/GetSampleList")
-public class GetSampleList extends HttpServlet {
-	
-	private SampleDao sampleDao;
+@WebServlet("/AddSample")
+public class AddSample extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		sampleDao = new SampleDao();
-		List<Sample> list =  sampleDao.selectAll();
-		/*
-		for(Sample s : list) {
-			System.out.println(s.getSampleNo() + s.getSampleName());
-		}
-		*/
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("WEB-INF/views/getSampleList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/addSample.jsp").forward(request, response);
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
