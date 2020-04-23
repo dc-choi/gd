@@ -34,6 +34,7 @@ public class SampleDao {
 	}
 	// Sample 수정전 sampleNo 받아오기
 	public List<Sample> selectOne(int sampleNo) {
+		// List라서 좀 selectOne으로 받아오기가 안됌 하려면 형변환을 해야함
 		return this.getSqlSession().selectList("gd.model.SampleMapper.selectOne", sampleNo);
 	}
 	// Sample 수정
