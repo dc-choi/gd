@@ -34,7 +34,7 @@ $(document).ready(function(){
 <body>
 	<form id="form" method="post" action="${pageContext.request.contextPath}/AddSample">
 		<div class="form-group">
-			<label for="sampleName">sample no : </label>
+			<label for="sampleName">sample name : </label>
 			<input type="text" class="form-control" id="sampleName" name="sampleName" placeholder="4자이상">
 		</div>
 		<div>

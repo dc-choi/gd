@@ -4,9 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 맵퍼 이름설정 : 불러올때 이름으로 불러올수있다 -->
 <mapper namespace="gd.model.SampleMapper">
+	<!-- #{}는 매개변수값을 가져올때 사용하는것이다 -->
+	<!-- $는 static, #는 일반변수이다 -->
+	<!-- 여기서는 앞에서 가져온값을 받아오기 때문에 #을 사용한다 -->
+	<!-- parameterType은 Object타입으로 받아오는데 쓸때는 형변환을 해준다고 한다 -->
+	<insert id="insertSample" parameterType="gd.model.Sample">
+		INSERT INTO sample(sample_name)
+		VALUES (#{sampleName})
+	</insert>
 	<!-- mybatis : ResultSet -> List<resultType> (ResultSet을 List로 변환시키지 않아도된다 = 반복문을 위한 반복을 안해도된다) -->
 	<!-- select id는 변수의 이름, resultType는 결과값의 타입을 선언함 -->
 	<select id="selectAll" resultType="gd.model.Sample">
-		SELECT sample_no sampleNo, sample_name sampleName FROM sample;
+		SELECT sample_no sampleNo, sample_name sampleName
+		FROM sample;
 	</select>
 </mapper>
