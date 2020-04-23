@@ -10,16 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gd.model.Sample;
-import gd.model.SampleDao;
+import gd.service.SampleService;
 
 @WebServlet("/GetSampleList")
 public class GetSampleList extends HttpServlet {
 	
-	private SampleDao sampleDao;
+	private SampleService sampleService;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		sampleDao = new SampleDao();
-		List<Sample> list =  sampleDao.selectAll();
+		String searchWord = request.getParameter("searchWord");
+		System.out.println(searchWord + " <-- GetSampleList.doGet().searchWord");
+		
+		int rowPerPage = 10;
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		sampleService = new SampleService();
+		List<Sample> list =  sampleService.getSampleListAll(searchWord, currentPage, rowPerPage);
 		/*
 		for(Sample s : list) {
 			System.out.println(s.getSampleNo() + s.getSampleName());

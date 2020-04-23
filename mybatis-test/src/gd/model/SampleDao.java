@@ -3,18 +3,19 @@ package gd.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class SampleDao {	
+public class SampleDao {
 	// List를 출력
-	public List<Sample> selectAll() {
+	public List<Sample> selectAll(Map map) {
 		// PreparedStatement + ResultSet
 		// mybatis가 JDBC API를 이용하여  ResultSet의 값이 List로 변환된다
-		return this.getSqlSession().selectList("gd.model.SampleMapper.selectAll");
+		return this.getSqlSession().selectList("gd.model.SampleMapper.selectAll", map);
 	}
 	// Sample 입력
 	// commit을 해야한다... ㅋㅋㅋㅋ
@@ -23,6 +24,22 @@ public class SampleDao {
 		SqlSession sqlSession = this.getSqlSession();
 		// SampleMapper에서 parameterType을 오브젝트 타입으로 받아오기 때문에 
 		sqlSession.insert("gd.model.SampleMapper.insertSample", s);
+		sqlSession.commit();
+	}
+	// Sample 삭제
+	public void deleteSample(int sampleNo) {
+		SqlSession sqlSession = this.getSqlSession();
+		sqlSession.delete("gd.model.SampleMapper.deleteSample", sampleNo);
+		sqlSession.commit();
+	}
+	// Sample 수정전 sampleNo 받아오기
+	public List<Sample> selectOne(int sampleNo) {
+		return this.getSqlSession().selectList("gd.model.SampleMapper.selectOne", sampleNo);
+	}
+	// Sample 수정
+	public void updateSample(Sample s) {
+		SqlSession sqlSession = this.getSqlSession();
+		sqlSession.update("gd.model.SampleMapper.updateSample", s);
 		sqlSession.commit();
 	}
 	// ClassforName + Connection

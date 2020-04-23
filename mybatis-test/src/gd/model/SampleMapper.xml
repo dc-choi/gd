@@ -4,6 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 맵퍼 이름설정 : 불러올때 이름으로 불러올수있다 -->
 <mapper namespace="gd.model.SampleMapper">
+	<delete id="deleteSample" parameterType="Integer">
+		DELETE FROM sample
+		WHERE sample_no = #{sampleNo}
+	</delete>
+	
+	<select id="selectOne" resultType="gd.model.Sample" parameterType="Integer">
+		SELECT sample_no sampleNo, sample_name sampleName
+		FROM sample
+		WHERE sample_no = #{sampleNo}
+	</select>
+	
+	<update id="updateSample" parameterType="gd.model.Sample">
+		UPDATE sample
+		SET sample_name = #{sampleName}
+		WHERE sample_no = #{sampleNo}
+	</update>
+	
 	<!-- #{}는 매개변수값을 가져올때 사용하는것이다 -->
 	<!-- $는 static, #는 일반변수이다 -->
 	<!-- 여기서는 앞에서 가져온값을 받아오기 때문에 #을 사용한다 -->
@@ -12,10 +29,16 @@
 		INSERT INTO sample(sample_name)
 		VALUES (#{sampleName})
 	</insert>
+	
 	<!-- mybatis : ResultSet -> List<resultType> (ResultSet을 List로 변환시키지 않아도된다 = 반복문을 위한 반복을 안해도된다) -->
 	<!-- select id는 변수의 이름, resultType는 결과값의 타입을 선언함 -->
-	<select id="selectAll" resultType="gd.model.Sample">
+	<!-- if를 추가하여 동적쿼리로 이용가능함, EL과 다르게  test뒤에 ${}를 붙이지않는다-->
+	<select id="selectAll" resultType="gd.model.Sample" parameterType="java.util.Map">
 		SELECT sample_no sampleNo, sample_name sampleName
-		FROM sample;
+		FROM sample
+		<if test="searchWord != null">
+			WHERE sample_name LIKE CONCAT('%', #{searchWord}, '%')
+		</if>
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 </mapper>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +16,11 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<!-- javascript AND jQuery -->
 <script>
-// $뒤 (document) jQuery객체이다
 $(document).ready(function(){
-	// form check
 	$("#btn").click(function(){
-		if($("#sampleName").val().length<4) {
-			alert("이름을 4자이상 입력해주세요");
+		if($("#sampleName").val().length == 0) {
+			alert("이름을 입력해주세요");
 			return;
 		}
 		$("#form").submit();
@@ -30,17 +28,20 @@ $(document).ready(function(){
 })
 </script>
 </head>
-<!-- EL AND JSTL -->
 <body>
 	<div class="container">
-	<h1>Add Sample</h1>
-		<form id="form" method="post" action="${pageContext.request.contextPath}/AddSample">
-			<div class="form-group">
-				<label for="sampleName">sample name : </label>
-				<input type="text" class="form-control" id="sampleName" name="sampleName" placeholder="4자이상">
-			</div>
+	<h1>Modify Sample</h1>
+		<form id="form" method="post" action="${pageContext.request.contextPath}/ModifySample">
+			<c:forEach var="l" items="${list}">
+				<div class="form-group">
+					<input type="text" class="form-control" name="sampleNo" id="sampleNo" value="${l.sampleNo}" readonly="readonly">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" name="sampleName" id="sampleName" value="${l.sampleName}">
+				</div>
+			</c:forEach>
 			<div>
-				<button type="button" class="btn btn-info" id="btn">add sample</button>
+				<button type="button" class="btn btn-info" id="btn">Update</button>
 			</div>
 		</form>
 		<br>
