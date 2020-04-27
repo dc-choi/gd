@@ -30,7 +30,7 @@ $(document).ready(function(){
 </head>
 <body>
 	<div class="container">
-		<h1>Sample List</h1>
+		<h1><a href="${pageContext.request.contextPath}/GetSampleList">Sample List</a></h1>
 		<br>
 		<div>
 			<a class="btn btn-info" href="${pageContext.request.contextPath}/AddSample">add sample</a>
